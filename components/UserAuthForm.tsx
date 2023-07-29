@@ -16,15 +16,16 @@ const UserAuthForm: FC<UserAuthFormProps> = ({ className, ...props }) => {
   let loginWithGoogleHandler = async () => {
     setIsLoading(true);
     try {
-      await signIn();
-      setIsLoading(false);
+      await signIn("google");
+      // setIsLoading(false);
     } catch (error) {
       toast({
-        title: "There was a problem",
+        title: "Error",
         description: "There was an error logging in with Google",
         variant: "destructive",
       });
     }
+    setIsLoading(false);
   };
 
   return (
