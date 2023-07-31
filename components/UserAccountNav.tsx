@@ -8,22 +8,21 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/DropdownMenu";
 import { User } from "next-auth";
-import { FC } from "react";
 import UserAvatar from "./UserAvatar";
 import Link from "next/link";
 import { signOut } from "next-auth/react";
 
-interface UserAccountNavProps {
-  user: Pick<User, "name" | "image" | "email">;
+interface UserAccountNavProps extends React.HTMLAttributes<HTMLDivElement> {
+  user: Pick<User, "name" | "image" | "email" | "id">;
 }
 
-const UserAccountNav: FC<UserAccountNavProps> = ({ user }) => {
+const UserAccountNav = ({ user }: UserAccountNavProps) => {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger>
+      <DropdownMenuTrigger id={user.id}>
         <UserAvatar
-          className="h-8 w-8"
           user={{ name: user.name || null, image: user.image || null }}
+          className="h-8 w-8"
         />
       </DropdownMenuTrigger>
       <DropdownMenuContent className="bg-white " align="end">
