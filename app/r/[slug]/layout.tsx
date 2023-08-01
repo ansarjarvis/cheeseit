@@ -1,7 +1,9 @@
 import SubscribeLeaveToggel from "@/components/SubscribeLeaveToggel";
+import { buttonVariants } from "@/components/ui/Button";
 import { getAuthSession } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { format } from "date-fns";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 
 let Layout = async ({
@@ -97,6 +99,16 @@ let Layout = async ({
                   isSubscribe={isSubscribe}
                 />
               ) : null}
+
+              <Link
+                className={buttonVariants({
+                  variant: "outline",
+                  className: "w-full mb-6",
+                })}
+                href={`${slug}/submit`}
+              >
+                Create Post
+              </Link>
             </dl>
           </div>
         </div>
