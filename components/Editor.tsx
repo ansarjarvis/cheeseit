@@ -71,23 +71,28 @@ const Editor: FC<EditorProps> = ({ subredditId }) => {
               endpoint: "/api/link",
             },
           },
-          // image: {
-          //   class: ImageTool,
-          //   config: {
-          //     uploader: {
-          //       async uplaodByFile(file: File) {
-          //         // upload to uploading
-          //         let [res] = await uploadFiles([file], "imageUploader");
-          //         return {
-          //           success: 1,
-          //           file: {
-          //             url: res.fileUrl,
-          //           },
-          //         };
-          //       },
-          //     },
-          //   },
-          // },
+          // upload image using uploadthing
+          image: {
+            class: ImageTool,
+            config: {
+              uploader: {
+                async uploadByFile(file: File) {
+                  let res = await uploadFiles({
+                    files: [file],
+                    endpoint: "imageUploader",
+                  });
+
+                  return {
+                    success: 1,
+                    file: {
+                      url: res[0].fileUrl,
+                    },
+                  };
+                },
+              },
+            },
+          },
+
           list: List,
           code: Code,
           inlinecode: InlineCode,

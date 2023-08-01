@@ -5,6 +5,12 @@ import { db } from "@/lib/db";
 import { format } from "date-fns";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "cheeseit",
+  description: "A Reddit clone built with Next.js and TypeScript.",
+};
 
 let Layout = async ({
   children,
