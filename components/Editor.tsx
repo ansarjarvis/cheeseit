@@ -38,10 +38,40 @@ const Editor: FC<EditorProps> = ({ subredditId }) => {
   });
 
   let editorRef = useRef<EditorJS>();
+  let _titleRef = useRef<HTMLTextAreaElement>(null);
   const [isMounted, setIsMounted] = useState<boolean>(false);
-  let _titleRef = useRef<HTMLTextAreaElement>();
   let pathname = usePathname();
   let router = useRouter();
+
+  let { mutate: createPost } = useMutation({
+    mutationFn: async ({
+      title,
+      content,
+      subredditId,
+    }: PostCreationRequest) => {
+      let payload: PostCreationRequest = {
+        title,
+        content,
+        subredditId,
+      };
+      let { data } = await axios.post("/api/subreddit/post/create", payload);
+      return data;
+    },
+
+    onError: () => {
+      return toast({
+        title: "Something went wrong",
+        description: "your post was not published please try again later",
+        variant: "destructive",
+      });
+    },
+
+    onSuccess: () => {
+      let newPathname = pathname.split("/").slice(0, -1).join("/");
+      router.push(newPathname);
+      router.refresh();
+    },
+  });
 
   let initializeEditor = useCallback(async () => {
     let EditorJS = (await import("@editorjs/editorjs")).default;
@@ -60,7 +90,7 @@ const Editor: FC<EditorProps> = ({ subredditId }) => {
         onReady() {
           editorRef.current = editor;
         },
-        placeholder: "Type here to write to your post",
+        placeholder: "Type here to write to your post...",
         inlineToolbar: true,
         data: { blocks: [] },
         tools: {
@@ -104,12 +134,6 @@ const Editor: FC<EditorProps> = ({ subredditId }) => {
   }, []);
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      setIsMounted(true);
-    }
-  }, []);
-
-  useEffect(() => {
     if (Object.keys(errors).length) {
       for (const [_key, value] of Object.entries(errors)) {
         value;
@@ -123,10 +147,17 @@ const Editor: FC<EditorProps> = ({ subredditId }) => {
   }, [errors]);
 
   useEffect(() => {
+    if (typeof window !== "undefined") {
+      setIsMounted(true);
+    }
+  }, []);
+
+  useEffect(() => {
     let init = async () => {
       await initializeEditor();
+
       setTimeout(() => {
-        _titleRef.current?.focus();
+        _titleRef?.current?.focus();
       }, 0);
     };
     if (isMounted) {
@@ -138,38 +169,7 @@ const Editor: FC<EditorProps> = ({ subredditId }) => {
     }
   }, [isMounted, initializeEditor]);
 
-  let { mutate: createPost } = useMutation({
-    mutationFn: async ({
-      title,
-      content,
-      subredditId,
-    }: PostCreationRequest) => {
-      let payload: PostCreationRequest = {
-        title,
-        content,
-        subredditId,
-      };
-      let { data } = await axios.post("/api/subreddit/post/create", payload);
-      return data;
-    },
-
-    onError: () => {
-      return toast({
-        title: "Something went wrong",
-        description: "your post was not published please try again later",
-        variant: "destructive",
-      });
-    },
-
-    onSuccess: () => {
-      let newPathname = pathname.split("/").slice(0, -1).join("/");
-      router.push(newPathname);
-
-      router.refresh();
-    },
-  });
-
-  let onSubmit = async (data: PostCreationRequest) => {
+  let onSubmit = async (data: FormData) => {
     let block = await editorRef.current?.save();
 
     let payload: PostCreationRequest = {
@@ -201,6 +201,7 @@ const Editor: FC<EditorProps> = ({ subredditId }) => {
               /* @ts-ignore */
               _titleRef.current = e;
             }}
+            {...rest}
             placeholder="Title"
             className="w-full resize-none appearance-none overflow-hidden bg-transparent text-5xl font-bold focus:outline-none"
           />
