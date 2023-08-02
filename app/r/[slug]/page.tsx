@@ -1,4 +1,5 @@
 import MiniCreatePost from "@/components/MiniCreatePost";
+import PostFeed from "@/components/PostFeed";
 import { INFINITE_SCROLLING_PAGINATION_RESULTS } from "@/config";
 import { getAuthSession } from "@/lib/auth";
 import { db } from "@/lib/db";
@@ -17,6 +18,7 @@ const page: FC<pageProps> = async ({ params }: pageProps) => {
   let session = await getAuthSession();
 
   let subreddit = await db.subreddit.findFirst({
+    where: { name: slug },
     include: {
       posts: {
         include: {
@@ -25,14 +27,15 @@ const page: FC<pageProps> = async ({ params }: pageProps) => {
           comments: true,
           subreddit: true,
         },
+        orderBy: {
+          createAt: "desc",
+        },
         take: INFINITE_SCROLLING_PAGINATION_RESULTS,
       },
     },
   });
 
-  if (!subreddit) {
-    return notFound();
-  }
+  if (!subreddit) return notFound();
 
   return (
     <>
@@ -43,6 +46,8 @@ const page: FC<pageProps> = async ({ params }: pageProps) => {
       <MiniCreatePost session={session} />
 
       {/* Todo show post in user feed */}
+
+      <PostFeed initialPosts={subreddit.posts} subredditName={subreddit.name} />
     </>
   );
 };

@@ -3,9 +3,9 @@ import { buttonVariants } from "@/components/ui/Button";
 import { getAuthSession } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { format } from "date-fns";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "cheeseit",
@@ -111,7 +111,8 @@ let Layout = async ({
                   variant: "outline",
                   className: "w-full mb-6",
                 })}
-                href={`${slug}/submit`}
+                href={`/r/${slug}/submit`}
+                replace={true}
               >
                 Create Post
               </Link>
