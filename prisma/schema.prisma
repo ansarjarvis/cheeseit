@@ -11,6 +11,11 @@ datasource db {
   relationMode = "prisma"
 }
 
+enum VoteType {
+  UP
+  DOWN
+}
+
 model Account {
   id                String  @id @default(cuid())
   userId            String
@@ -111,11 +116,6 @@ model Comment {
 
   votes     CommentVote[]
   commentId String?
-}
-
-enum VoteType {
-  UP
-  DOWN
 }
 
 model Vote {
