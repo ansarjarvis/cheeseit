@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 
 const CustomFeed = async () => {
   let session = await getAuthSession();
+
   if (!session) return notFound();
 
   const followedCommunities = await db.subscription.findMany({

@@ -24,7 +24,7 @@ const Post: FC<PostProps> = ({
   votesAmount: _votesAmount,
   currentVote: _currentVote,
 }) => {
-  let postRef = useRef<HTMLDivElement>(null);
+  let postRef = useRef<HTMLParagraphElement>(null);
   return (
     <div className="rounded-md bg-white shadow">
       <div className="px-6 py-4 flex justify-between">

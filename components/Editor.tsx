@@ -70,6 +70,10 @@ const Editor: FC<EditorProps> = ({ subredditId }) => {
       let newPathname = pathname.split("/").slice(0, -1).join("/");
       router.push(newPathname);
       router.refresh();
+
+      return toast({
+        description: "Your post has been published",
+      });
     },
   });
 
