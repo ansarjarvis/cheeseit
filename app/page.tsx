@@ -5,11 +5,20 @@ import { getAuthSession } from "@/lib/auth";
 import { HomeIcon } from "lucide-react";
 import Link from "next/link";
 
+/* for varcel error on fetching cached post */
+
+export let dynamic = "force-dynamic";
+export let fetchCache = "force-no-store";
+
 export default async function Home() {
   let session = await getAuthSession();
   return (
     <>
-      <h1 className="font-bold text-3xl md:text-4xl">Your Feed</h1>
+      {session?.user ? (
+        <h1 className="font-bold text-3xl md:text-4xl">Your Feed</h1>
+      ) : (
+        <h1 className="font-bold text-3xl md:text-4xl">General Feed</h1>
+      )}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-y-4 md:gap-x-4 py-6">
         {/* display either custom feed or general feed depand upon you loggedin or not*/}
         {session ? <CustomFeed /> : <GeneralFeed />}
