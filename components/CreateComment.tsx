@@ -17,7 +17,7 @@ interface CreateCommentProps {
 }
 
 const CreateComment: FC<CreateCommentProps> = ({ postId, replyToId }) => {
-  let { loginToast } = useCustomToast();
+  let { loginToastComment } = useCustomToast();
   let [input, setInput] = useState<string>("");
   let router = useRouter();
 
@@ -35,7 +35,7 @@ const CreateComment: FC<CreateCommentProps> = ({ postId, replyToId }) => {
     onError: (error) => {
       if (error instanceof AxiosError) {
         if (error.response?.status === 401) {
-          return loginToast();
+          return loginToastComment();
         }
       }
 

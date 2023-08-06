@@ -19,6 +19,39 @@ export let useCustomToast = () => {
       ),
     });
   };
+  let loginToastVote = () => {
+    let { dismiss } = toast({
+      title: "Login required",
+      description: "You must be Logged In to do votes",
+      variant: "destructive",
+      action: (
+        <Link
+          href="/sign-in"
+          onClick={() => dismiss()}
+          className={buttonVariants({ variant: "outline" })}
+        >
+          login
+        </Link>
+      ),
+    });
+  };
 
-  return { loginToast };
+  let loginToastComment = () => {
+    let { dismiss } = toast({
+      title: "Login required",
+      description: "You must be Logged In to do comments",
+      variant: "destructive",
+      action: (
+        <Link
+          href="/sign-in"
+          onClick={() => dismiss()}
+          className={buttonVariants({ variant: "outline" })}
+        >
+          login
+        </Link>
+      ),
+    });
+  };
+
+  return { loginToast, loginToastVote, loginToastComment };
 };

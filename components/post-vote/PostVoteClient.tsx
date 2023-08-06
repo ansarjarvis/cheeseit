@@ -23,7 +23,7 @@ const PostVoteClient: FC<PostVoteClientProps> = ({
   initialVoteAmount,
   initialVote,
 }) => {
-  let { loginToast } = useCustomToast();
+  let { loginToastVote } = useCustomToast();
   let [votesAmount, setVotesAmount] = useState<number>(initialVoteAmount);
   const [currentVote, setCurrentVote] = useState(initialVote);
   let preVotes = usePrevious(currentVote);
@@ -52,7 +52,7 @@ const PostVoteClient: FC<PostVoteClientProps> = ({
 
       if (err instanceof AxiosError) {
         if (err.response?.status === 401) {
-          return loginToast();
+          return loginToastVote();
         }
       }
 
@@ -79,7 +79,7 @@ const PostVoteClient: FC<PostVoteClientProps> = ({
   });
 
   return (
-    <div className="flex sm:flex-col gap-4 sm:gap-0 pr-6 sm:w-20 pb-4 sm:pb-0">
+    <div className="flex flex-col gap-4 sm:gap-0 pr-6 sm:w-20 pb-4 sm:pb-0">
       <Button
         onClick={() => vote("UP")}
         size="sm"
