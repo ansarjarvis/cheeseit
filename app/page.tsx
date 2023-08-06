@@ -35,8 +35,8 @@ export default async function Home() {
           <div className="-my-3 divide-y divide-gray-100 px-6 py-4 text-sm leading-6">
             <div className="flex justify-between gap-x-4 py-3">
               <p className="text-zinc-500">
-                Your personal CheeseIt homepage . Come here to enjoy your cheese
-                and coffee with your favorite communities.
+                Your personal CheeseIt homepage. Come here to enjoy your time
+                with your favorite communities.
               </p>
             </div>
 

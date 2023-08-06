@@ -1,5 +1,6 @@
 "use client";
 
+import * as React from "react";
 import {
   UsernameValidator,
   UsernameValidatorRequest,
@@ -31,7 +32,7 @@ interface UserNameFormProps extends React.HTMLAttributes<HTMLFormElement> {
 }
 type FormData = z.infer<typeof UsernameValidator>;
 
-const UserNameForm: FC<UserNameFormProps> = ({ user, className, ...props }) => {
+const UserNameForm = ({ user, className, ...props }: UserNameFormProps) => {
   let router = useRouter();
 
   let {
@@ -45,11 +46,11 @@ const UserNameForm: FC<UserNameFormProps> = ({ user, className, ...props }) => {
     },
   });
 
-  let { mutate: updateUsernaem, isLoading } = useMutation({
+  let { mutate: updateUsername, isLoading } = useMutation({
     mutationFn: async ({ name }: FormData) => {
       let payload: FormData = { name };
-      let {} = await axios.patch(`/api/username`, payload);
-      return date;
+      let { data } = await axios.patch(`/api/username`, payload);
+      return data;
     },
     onError: (err) => {
       if (err instanceof AxiosError) {
@@ -79,7 +80,7 @@ const UserNameForm: FC<UserNameFormProps> = ({ user, className, ...props }) => {
   return (
     <form
       className={cn(className)}
-      onSubmit={handleSubmit((e) => updateUsernaem(e))}
+      onSubmit={handleSubmit((e) => updateUsername(e))}
       {...props}
     >
       <Card>
@@ -99,7 +100,7 @@ const UserNameForm: FC<UserNameFormProps> = ({ user, className, ...props }) => {
             </Label>
             <Input
               id="name"
-              className="w-[400px] pl-6"
+              className="w-[280px] pl-6"
               size={32}
               {...register("name")}
             />
@@ -109,7 +110,7 @@ const UserNameForm: FC<UserNameFormProps> = ({ user, className, ...props }) => {
           </div>
         </CardContent>
         <CardFooter>
-          <Button>Change name</Button>
+          <Button isLoading={isLoading}>Change name</Button>
         </CardFooter>
       </Card>
     </form>
