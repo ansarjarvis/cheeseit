@@ -4,6 +4,7 @@ import { buttonVariants } from "./ui/Button";
 import { getAuthSession } from "@/lib/auth";
 
 import UserAccountNav from "./UserAccountNav";
+import SearchBar from "./SearchBar";
 
 const Navbar = async () => {
   let session = await getAuthSession();
@@ -20,12 +21,14 @@ const Navbar = async () => {
 
         {/*  Search Bar */}
 
+        <SearchBar />
+
         {/*  Auth sing in Button */}
         {session?.user ? (
           <UserAccountNav user={session.user} />
         ) : (
           <Link href="/sign-in" className={buttonVariants()}>
-            Sign In
+            SignIn
           </Link>
         )}
       </div>
