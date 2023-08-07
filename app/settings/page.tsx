@@ -1,7 +1,7 @@
-export let metaData = {
-  title: "Settings",
-  description: "Manage account and website settings...",
-};
+// export let metaData = {
+//   title: "Settings",
+//   description: "Manage account and website settings...",
+// };
 
 import UserNameForm from "@/components/UserNameForm";
 import { authOptions, getAuthSession } from "@/lib/auth";
