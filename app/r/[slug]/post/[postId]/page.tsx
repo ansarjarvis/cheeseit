@@ -9,7 +9,7 @@ import { CachedPost } from "@/types/redis";
 import { Post, User, Vote } from "@prisma/client";
 import { ArrowBigDown, ArrowBigUp, Loader2 } from "lucide-react";
 import { notFound } from "next/navigation";
-import { FC, Suspense } from "react";
+import { Suspense } from "react";
 
 interface pageProps {
   params: {
@@ -17,8 +17,8 @@ interface pageProps {
   };
 }
 
-export let dynamic = "force-dynamic";
-export let fetchCache = "force-no-store";
+// export let dynamic = "force-dynamic";
+// export let fetchCache = "force-no-store";
 
 const page = async ({ params }: pageProps) => {
   let cachedPost = (await redis.hgetall(`post:${params.postId}`)) as CachedPost;

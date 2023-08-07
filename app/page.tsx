@@ -7,8 +7,8 @@ import Link from "next/link";
 
 /* for varcel error on fetching cached post */
 
-export let dynamic = "force-dynamic";
-export let fetchCache = "force-no-store";
+// export let dynamic = "force-dynamic";
+// export let fetchCache = "force-no-store";
 
 export default async function Home() {
   let session = await getAuthSession();
