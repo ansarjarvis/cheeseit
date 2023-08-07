@@ -1,4 +1,4 @@
-export let MetaData = {
+export let metaData = {
   title: "Settings",
   description: "Manage account and website settings...",
 };
